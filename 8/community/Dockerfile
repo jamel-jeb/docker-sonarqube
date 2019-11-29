@@ -17,7 +17,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_HOME=/opt/sq \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube
 
-COPY zip/* "$SONARQUBE_ZIP_DIR"/
+COPY ./zip/* "$SONARQUBE_ZIP_DIR"/
 
 SHELL ["/bin/bash", "-c"]
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
