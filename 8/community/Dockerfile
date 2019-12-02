@@ -1,6 +1,5 @@
 FROM openjdk:11-jre-slim
 
-Run pwd
 
 RUN apt-get update \
     && apt-get install -y curl unzip \
@@ -54,7 +53,7 @@ RUN set -x \
     && chown --recursive sonarqube:sonarqube "$SONARQUBE_HOME" "$SONARQUBE_PUBLIC_HOME" \
     && cd /
 
-COPY --chown=sonarqube:sonarqube ./run.sh "$SONARQUBE_HOME/bin/"
+COPY --chown=sonarqube:sonarqube /run.sh "$SONARQUBE_HOME/bin/"
 
 USER sonarqube
 WORKDIR $SONARQUBE_HOME
