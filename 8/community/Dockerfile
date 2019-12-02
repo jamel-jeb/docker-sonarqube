@@ -19,7 +19,8 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube
     
 #Déclarer volume dans AzureFile
-RUN apt-get install -y cifs-utils
+RUN apt-get install sudo
+RUN sudo apt-get install -y cifs-utils
 VOLUME CREATE --name sonarqubeVolume -d azurefile -o share=sonarqubeVolume
 RUN -i -t -v sonarqubeVolume:/opt busybox
 
