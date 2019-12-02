@@ -17,9 +17,9 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube
     
 #Déclarer volume dans AzureFile
-docker volume CREATE --name sonarqubeVolume -d azurefile -o share=sonarqubeVolume
-docker run -i -t -v sonarqubeVolume:"$SONARQUBE_HOME"
-docker run -i -t -v sonarqubeVolume:"$SONARQUBE_PUBLIC_HOME"
+VOLUME CREATE --name sonarqubeVolume -d azurefile -o share=sonarqubeVolume
+RUN -i -t -v sonarqubeVolume:"$SONARQUBE_HOME"
+RUN -i -t -v sonarqubeVolume:"$SONARQUBE_PUBLIC_HOME"
 
 SHELL ["/bin/bash", "-c"]
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
