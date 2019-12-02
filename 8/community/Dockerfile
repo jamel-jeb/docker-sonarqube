@@ -4,6 +4,7 @@ FROM openjdk:11-jre-slim
 RUN apt-get update \
     && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y cifs-utils
    
 
 # Http port
@@ -19,7 +20,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     
 #Déclarer volume dans AzureFile
 VOLUME CREATE --name sonarqubeVolume -d azurefile -o share=sonarqubeVolume
-RUN -v sonarqubeVolume:/opt
+RUN -i -t -v sonarqubeVolume:/opt busybox
 
 SHELL ["/bin/bash", "-c"]
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
