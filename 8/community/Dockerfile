@@ -4,7 +4,7 @@ FROM openjdk:11-jre-slim
 RUN apt-get update \
     && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/*
-RUN apt-get install -y cifs-utils
+
    
 
 # Http port
@@ -19,6 +19,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube
     
 #Déclarer volume dans AzureFile
+RUN sudo apt-get install -y cifs-utils
 VOLUME CREATE --name sonarqubeVolume -d azurefile -o share=sonarqubeVolume
 RUN -i -t -v sonarqubeVolume:/opt busybox
 
