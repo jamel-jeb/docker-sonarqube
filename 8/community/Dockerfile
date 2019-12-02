@@ -3,7 +3,8 @@ FROM openjdk:11-jre-slim
 
 RUN apt-get update \
     && apt-get install -y curl unzip \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get install -y cifs-utils
 
 # Http port
 EXPOSE 9000
@@ -18,8 +19,8 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     
 #Déclarer volume dans AzureFile
 VOLUME CREATE --name sonarqubeVolume -d azurefile -o share=sonarqubeVolume
-RUN -v sonarqubeVolume:/opt/sq
-RUN -v sonarqubeVolume:/opt/sonarqube
+RUN -i -t -v sonarqubeVolume:/opt/sq
+RUN -i -t -v sonarqubeVolume:/opt/sonarqube
 
 SHELL ["/bin/bash", "-c"]
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
