@@ -21,7 +21,7 @@ RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
     storageAccountName="totalhp2welrs" \
     fileShareName="sonarqube" \
-    mntPath="/mnt/$storageAccountName/$fileShareName"
+    mntPath="/mnt/totalhp2welrs/sonarqube"
 
 RUN sudo mkdir -p $mntPath
 
