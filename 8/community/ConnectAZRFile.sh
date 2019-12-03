@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
+storageAccountName="totalhp2welrs" \
+fileShareName="sonarqube" \
+
+mntPath="/mnt/totalhp2welrs/sonarqube"
+
+sudo mkdir -p $mntPath
+
 sudo mkdir /mnt/totalhp2welrs
 if [ ! -d "/etc/smbcredentials" ]; then
 sudo mkdir /etc/smbcredentials
