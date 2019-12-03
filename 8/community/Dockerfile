@@ -28,7 +28,7 @@ RUN sudo mkdir -p $mntPath
 ARG SONARQUBE_VERSION=8.0
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
 ENV SONAR_VERSION=${SONARQUBE_VERSION} \
-    SONARQUBE_HOME="$mntPath/opt/sq" \
+    SONARQUBE_HOME="/opt/sq" \
     SONARQUBE_PUBLIC_HOME="$mntPath/opt/sonarqube"
     
 
