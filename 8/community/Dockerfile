@@ -23,14 +23,27 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_HOME=/opt/sq \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube
     
-#Déclarer volume dans AzureFile
-RUN sudo mkdir /mnt/totalhp2welrs \
-    && sudo mkdir /etc/smbcredentials \
-    && sudo bash -c 'echo "username=totalhp2welrs" >> /etc/smbcredentials/totalhp2welrs.cred' \
-    && sudo bash -c 'echo "password=C0xP848pOZVZAZ1dUqMfe8kir4W/IQl2IDL3LgWFUKlk7K/bvMNlKKoC4O7ZhNEdt5GwvpXoOZFSr6wV6Uiu+w==" >> /etc/smbcredentials/totalhp2welrs.cred' \
-    && sudo chmod 600 /etc/smbcredentials/totalhp2welrs.cred \
-    && sudo bash -c 'echo "//totalhp2welrs.file.core.windows.net/sonarqube /mnt/totalhp2welrs cifs nofail,vers=3.0,credentials=/etc/smbcredentials/totalhp2welrs.cred,dir_mode=0777,file_mode=0777,serverino" >> /etc/fstab' \
-    && sudo mount -t cifs //totalhp2welrs.file.core.windows.net/sonarqube /mnt/totalhp2welrs -o vers=3.0,credentials=/etc/smbcredentials/totalhp2welrs.cred,dir_mode=0777,file_mode=0777,serverino 
+#Déclarer le fileshare dans AzureFile
+ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
+    storageAccountName="totalhp2welrs" \
+    fileShareName="sonarqube" \
+    mntPath="/mnt/$storageAccountName/$fileShareName"
+
+RUN sudo mkdir -p $mntPath
+
+#Monter le volume
+ENV httpEndpoint=$(az storage account show \
+    --resource-group $resourceGroupName \
+    --name $storageAccountName \
+    --query "primaryEndpoints.file" | tr -d '"')
+smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
+
+ENV storageAccountKey=$(az storage account keys list \
+    --resource-group $resourceGroupName \
+    --account-name $storageAccountName \
+    --query "[0].value" | tr -d '"')
+
+RUN sudo mount -t cifs $smbPath $mntPath -o vers=3.0,username=$storageAccountName,password=$storageAccountKey,serverino
 
 SHELL ["/bin/bash", "-c"]
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
