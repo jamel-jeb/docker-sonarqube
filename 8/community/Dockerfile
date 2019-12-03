@@ -8,7 +8,6 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install -y sudo \
     && sudo apt install -y cifs-utils
-  
 
    
 
@@ -17,12 +16,7 @@ EXPOSE 9000
 
 RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
-ARG SONARQUBE_VERSION=8.0
-ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
-ENV SONAR_VERSION=${SONARQUBE_VERSION} \
-    SONARQUBE_HOME=/opt/sq \
-    SONARQUBE_PUBLIC_HOME=/opt/sonarqube
-    
+  
 #Déclarer le fileshare dans AzureFile
 ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
     storageAccountName="totalhp2welrs" \
@@ -31,19 +25,13 @@ ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
 
 RUN sudo mkdir -p $mntPath
 
-#Monter le volume
-ENV httpEndpoint=$(az storage account show \
-    --resource-group $resourceGroupName \
-    --name $storageAccountName \
-    --query "primaryEndpoints.file" | tr -d '"')
-ENV smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
+ARG SONARQUBE_VERSION=8.0
+ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
+ENV SONAR_VERSION=${SONARQUBE_VERSION} \
+    SONARQUBE_HOME="$mntPath/opt/sq" \
+    SONARQUBE_PUBLIC_HOME="$mntPath/opt/sonarqube"
+    
 
-ENV storageAccountKey=$(az storage account keys list \
-    --resource-group $resourceGroupName \
-    --account-name $storageAccountName \
-    --query "[0].value" | tr -d '"')
-
-RUN sudo mount -t cifs $smbPath $mntPath -o vers=3.0,username=$storageAccountName,password=$storageAccountKey,serverino
 
 SHELL ["/bin/bash", "-c"]
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
