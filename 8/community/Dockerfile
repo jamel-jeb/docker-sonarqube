@@ -21,7 +21,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
 #Déclarer volume dans AzureFile
 
 VOLUME CREATE --name sonarqubeVolume -d azurefile -o share=sonarqubeVolume
-RUN -d \
+RUN -d azurefile \
   --name sonarqubeVolume \
   -v sonarqubeVolume:/opt
 
