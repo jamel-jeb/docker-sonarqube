@@ -1,5 +1,6 @@
 FROM openjdk:11-jre-slim
 
+ENTRYPOINT ["./ConnectAZRFile.sh"]
 
 RUN apt-get update \
     && apt-get install -y curl unzip \
@@ -18,17 +19,12 @@ RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
   
 #Déclarer le fileshare dans AzureFile
-ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
-    storageAccountName="totalhp2welrs" \
-    fileShareName="sonarqube" \
-    mntPath="/mnt/totalhp2welrs/sonarqube"
-
-RUN sudo mkdir -p $mntPath
+ENV mntPath="/mnt/totalhp2welrs/sonarqube"
 
 ARG SONARQUBE_VERSION=8.0
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
 ENV SONAR_VERSION=${SONARQUBE_VERSION} \
-    SONARQUBE_HOME=/opt/sq \
+    SONARQUBE_HOME="$mntPath/opt/sq" \
     SONARQUBE_PUBLIC_HOME="$mntPath/opt/sonarqube"
     
 
