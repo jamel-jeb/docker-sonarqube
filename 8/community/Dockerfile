@@ -36,7 +36,7 @@ ENV httpEndpoint=$(az storage account show \
     --resource-group $resourceGroupName \
     --name $storageAccountName \
     --query "primaryEndpoints.file" | tr -d '"')
-smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
+ENV smbPath=$(echo $httpEndpoint | cut -c7-$(expr length $httpEndpoint))$fileShareName
 
 ENV storageAccountKey=$(az storage account keys list \
     --resource-group $resourceGroupName \
