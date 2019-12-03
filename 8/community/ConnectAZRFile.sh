@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
-storageAccountName="totalhp2welrs" \
-fileShareName="sonarqube" \
+set -x
+resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" 
+storageAccountName="totalhp2welrs" 
+fileShareName="sonarqube" 
 
 mntPath="/mnt/totalhp2welrs/sonarqube"
 
