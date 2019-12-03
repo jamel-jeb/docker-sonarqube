@@ -5,9 +5,8 @@ RUN apt-get update \
     && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/* 
 
-RUN   su \
+RUN apt-get update \
     && apt-get install sudo \
-    && sudo apt update \
     && sudo apt install cifs-utils
   
 
