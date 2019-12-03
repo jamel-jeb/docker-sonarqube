@@ -21,9 +21,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
 #Déclarer volume dans AzureFile
 
 RUN sudo mkdir /mnt/totalhp2welrs \
-    && if [ ! -d "/etc/smbcredentials" ]; then \
-     sudo mkdir /etc/smbcredentials \
-     fi \
+    && if [ ! -d "/etc/smbcredentials" ]; then sudo mkdir /etc/smbcredentials fi \
     && if [ ! -f "/etc/smbcredentials/totalhp2welrs.cred" ]; then \
      sudo bash -c 'echo "username=totalhp2welrs" >> /etc/smbcredentials/totalhp2welrs.cred' \
      sudo bash -c 'echo "password=C0xP848pOZVZAZ1dUqMfe8kir4W/IQl2IDL3LgWFUKlk7K/bvMNlKKoC4O7ZhNEdt5GwvpXoOZFSr6wV6Uiu+w==" >> /etc/smbcredentials/totalhp2welrs.cred' \
