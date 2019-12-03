@@ -24,7 +24,8 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube
     
 #Déclarer volume dans AzureFile
-
+VOLUME create --name sonarqube_volume -d azurefile -o share=sonarqube_volume
+RUN -i -t -v sonarqube_volume:/opt busybox
 
 SHELL ["/bin/bash", "-c"]
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
