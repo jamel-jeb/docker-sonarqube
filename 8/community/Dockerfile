@@ -2,6 +2,7 @@ FROM openjdk:11-jre-slim
 
 ENTRYPOINT ["./ConnectAZRFile.sh"]
 
+
 RUN apt-get update \
     && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/* 
