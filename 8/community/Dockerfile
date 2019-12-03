@@ -3,8 +3,13 @@ FROM openjdk:11-jre-slim
 
 RUN apt-get update \
     && apt-get install -y curl unzip \
-    && rm -rf /var/lib/apt/lists/* \
-    && uname -r
+    && rm -rf /var/lib/apt/lists/* 
+
+RUN   su \
+    && apt-get install sudo \
+    && sudo apt update \
+    && sudo apt install cifs-utils
+  
 
    
 
