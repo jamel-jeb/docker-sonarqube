@@ -40,7 +40,6 @@ ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
     fileShareName="sonarqube" \
     mntPath="/mnt/totalhp2welrs/sonarqube"
     
-RUN --privileged ubuntu /bin/bash
 RUN sudo mkdir -p $mntPath \
     && sudo mkdir /etc/smbcredentials \
     && sudo bash -c 'echo "username=totalhp2welrs" >> /etc/smbcredentials/totalhp2welrs.cred' \
