@@ -9,8 +9,7 @@ RUN apt-get update \
 
 RUN apt-get update \
     && apt-get install -y sudo \
-    && sudo apt install -y cifs-utils \
-    && sudo apt-get install docker-ee docker-ee-cli containerd.io
+    && sudo apt install -y cifs-utils
        
 
 
@@ -41,8 +40,8 @@ ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
     fileShareName="sonarqube" \
     mntPath="/mnt/totalhp2welrs/sonarqube"
     
-RUN sudo docker run -it --privileged ubuntu /bin/bash  
-RUN sudo mkdir -p $mntPath \
+
+RUN --privileged sudo mkdir -p $mntPath \
     && sudo mkdir /etc/smbcredentials \
     && sudo bash -c 'echo "username=totalhp2welrs" >> /etc/smbcredentials/totalhp2welrs.cred' \
     && sudo bash -c 'echo "password=C0xP848pOZVZAZ1dUqMfe8kir4W/IQl2IDL3LgWFUKlk7K/bvMNlKKoC4O7ZhNEdt5GwvpXoOZFSr6wV6Uiu+w==" >> /etc/smbcredentials/totalhp2welrs.cred' \
