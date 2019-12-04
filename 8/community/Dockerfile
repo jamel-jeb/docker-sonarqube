@@ -11,7 +11,7 @@ RUN apt-get update \
     && apt-get install -y sudo \
     && sudo apt install -y cifs-utils
 
-  ENTRYPOINT ["./ConnectAZRFile.sh"] 
+
 
 # Http port
 EXPOSE 9000
@@ -32,6 +32,25 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
 
 
 SHELL ["/bin/bash", "-c"]
+
+#Mount Azurefile
+
+ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
+    storageAccountName="totalhp2welrs" \
+    fileShareName="sonarqube" \
+    mntPath="/mnt/totalhp2welrs/sonarqube"
+    
+RUN sudo mkdir -p $mntPath \
+    && sudo mkdir /mnt/totalhp2welrs \
+    && sudo mkdir /etc/smbcredentials \
+    && sudo bash -c 'echo "username=totalhp2welrs" >> /etc/smbcredentials/totalhp2welrs.cred' \
+    && sudo bash -c 'echo "password=C0xP848pOZVZAZ1dUqMfe8kir4W/IQl2IDL3LgWFUKlk7K/bvMNlKKoC4O7ZhNEdt5GwvpXoOZFSr6wV6Uiu+w==" >> /etc/smbcredentials/totalhp2welrs.cred' \
+    && sudo chmod 600 /etc/smbcredentials/totalhp2welrs.cred \
+    && sudo bash -c 'echo "//totalhp2welrs.file.core.windows.net/sonarqube /mnt/totalhp2welrs cifs nofail,vers=3.0,credentials=/etc/smbcredentials/totalhp2welrs.cred,dir_mode=0777,file_mode=0777,serverino" >> /etc/fstab' \
+    && sudo mount -t cifs //totalhp2welrs.file.core.windows.net/sonarqube /mnt/totalhp2welrs -o vers=3.0,credentials=/etc/smbcredentials/totalhp2welrs.cred,dir_mode=0777,file_mode=0777,serverino
+
+
+#############
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
   "$JAVA_HOME/conf/security/java.security"
 
