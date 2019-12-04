@@ -32,14 +32,14 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
 
 
 SHELL ["/bin/bash", "-c"]
-
+RUN -it --privileged ubuntu /bin/bash  
 #Mount Azurefile
 
 ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
     storageAccountName="totalhp2welrs" \
     fileShareName="sonarqube" \
     mntPath="/mnt/totalhp2welrs/sonarqube"
-    
+  
 RUN sudo mkdir -p $mntPath \
     && sudo mkdir /etc/smbcredentials \
     && sudo bash -c 'echo "username=totalhp2welrs" >> /etc/smbcredentials/totalhp2welrs.cred' \
