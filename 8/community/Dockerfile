@@ -26,7 +26,8 @@ ARG SONARQUBE_VERSION=8.0
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
 ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_HOME="$mntPath/opt/sq" \
-    SONARQUBE_PUBLIC_HOME="$mntPath/opt/sonarqube"
+    SONARQUBE_PUBLIC_HOME="$mntPath/opt/sonarqube" \
+    SONARQUBE_OPT="$mntPath/opt/"
     
 
 
@@ -35,7 +36,7 @@ RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/
   "$JAVA_HOME/conf/security/java.security"
 
 RUN set -x \
-    && cd /opt \
+    && cd "$SONARQUBE_OPT" \
 # download and unzip SQ
     && curl -o sonarqube.zip -fsSL "$SONARQUBE_ZIP_URL" \
     && rm -Rf "${SONARQUBE_ZIP_DIR}" \
