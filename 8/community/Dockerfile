@@ -39,8 +39,9 @@ ENV resourceGroupName="RG-TOTAL-HP2-WE-SONARQUBE" \
     storageAccountName="totalhp2welrs" \
     fileShareName="sonarqube" \
     mntPath="/mnt/totalhp2welrs/sonarqube"
-  
-RUN --privileged sudo mkdir -p $mntPath \
+    
+RUN sudo docker run -it --privileged ubuntu /bin/bash  
+RUN sudo mkdir -p $mntPath \
     && sudo mkdir /etc/smbcredentials \
     && sudo bash -c 'echo "username=totalhp2welrs" >> /etc/smbcredentials/totalhp2welrs.cred' \
     && sudo bash -c 'echo "password=C0xP848pOZVZAZ1dUqMfe8kir4W/IQl2IDL3LgWFUKlk7K/bvMNlKKoC4O7ZhNEdt5GwvpXoOZFSr6wV6Uiu+w==" >> /etc/smbcredentials/totalhp2welrs.cred' \
