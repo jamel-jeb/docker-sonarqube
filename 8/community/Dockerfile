@@ -10,8 +10,8 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install -y sudo \
     && sudo apt install -y cifs-utils \
-    && sudo apt-get install docker-ce docker-ce-cli containerd.io
-
+    && sudo apt-get install docker-ee docker-ee-cli containerd.io
+       
 
 
 # Http port
