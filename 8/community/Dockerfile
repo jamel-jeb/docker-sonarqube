@@ -10,6 +10,7 @@ RUN apt-get update \
 RUN apt-get update \
     && apt-get install -y sudo \
     && sudo apt install -y cifs-utils
+    && sudo apt-get install docker-ce
 
 
 
