@@ -1,8 +1,5 @@
 FROM openjdk:11-jre-slim
 
-
-
-
 RUN apt-get update \
     && apt-get install -y curl unzip \
     && rm -rf /var/lib/apt/lists/* 
@@ -11,8 +8,6 @@ RUN apt-get update \
     && apt-get install -y sudo \
     && sudo apt install -y cifs-utils
        
-
-
 # Http port
 EXPOSE 9000
 
@@ -26,8 +21,6 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube \
    
     
-
-
 SHELL ["/bin/bash", "-c"]
 
 #Mount Azurefile
