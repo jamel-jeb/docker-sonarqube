@@ -12,10 +12,6 @@ RUN apt-get update \
 EXPOSE 9000
 RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
-#Déclarer le fileshare dans AzureFile
-
-ENV mntPath="/mnt/totalhp2welrs/sonarqube"
-
 ARG SONARQUBE_VERSION=8.0
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
 ENV SONAR_VERSION=${SONARQUBE_VERSION} \
@@ -26,9 +22,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     
 SHELL ["/bin/bash", "-c"]
 
-#installer package docker
 
-     
 
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
   "$JAVA_HOME/conf/security/java.security"
