@@ -35,6 +35,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_PUBLIC_HOME=/opt/sonarqube
 
 
+RUN locate *.zip
 
 COPY zip/* "$SONARQUBE_ZIP_DIR"/
 
