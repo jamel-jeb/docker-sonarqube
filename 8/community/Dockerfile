@@ -1,8 +1,10 @@
 FROM openjdk:11-jre-slim
 
+
+
 RUN apt-get update \
 
-    && apt-get install -y curl unzip \
+    && apt-get install -y curl unzip libfreetype6 libfontconfig1 \
 
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,7 +36,7 @@ ENV SONAR_VERSION=${SONARQUBE_VERSION} \
 
 
 
-COPY /opt/*.zip "$SONARQUBE_ZIP_DIR"/
+COPY zip/* "$SONARQUBE_ZIP_DIR"/
 
 
 
