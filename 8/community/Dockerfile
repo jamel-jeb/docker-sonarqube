@@ -29,6 +29,7 @@ SHELL ["/bin/bash", "-c"]
 #installer package docker
 RUN sudo apt-get update \
     && apt-get install \
+    && apt-get install apt-transport-https \
     && apt-transport-https \
     && ca-certificates \
     && curl \
