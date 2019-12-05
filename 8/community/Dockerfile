@@ -2,11 +2,29 @@ FROM openjdk:11-jre-slim
 
 
 
+
+
+
+
+
+
 RUN apt-get update \
 
-    && apt-get install -y curl unzip libfreetype6 libfontconfig1 \
+    && apt-get install -y curl unzip \
 
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* 
+
+
+
+RUN apt-get update \
+
+    && apt-get install -y sudo \
+
+    && sudo apt install -y cifs-utils
+
+       
+
+
 
 
 
@@ -20,28 +38,25 @@ RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
 
 
+  
+
 ARG SONARQUBE_VERSION=8.0
 
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
-
-ARG SONARQUBE_ZIP_DIR=/tmp/zip
-
-ARG SONARQUBE_ZIP_LOCATION=$SONARQUBE_ZIP_DIR/sonarqube-${SONARQUBE_VERSION}.zip
 
 ENV SONAR_VERSION=${SONARQUBE_VERSION} \
 
     SONARQUBE_HOME=/opt/sq \
 
-    SONARQUBE_PUBLIC_HOME=/opt/sonarqube
+    SONARQUBE_PUBLIC_HOME=/opt/sonarqube  
 
 
-RUN locate *.zip
-
-COPY zip/* "$SONARQUBE_ZIP_DIR"/
 
 
 
 SHELL ["/bin/bash", "-c"]
+
+
 
 RUN sed -i -e "s?securerandom.source=file:/dev/random?securerandom.source=file:/dev/urandom?g" \
 
@@ -55,13 +70,7 @@ RUN set -x \
 
 # download and unzip SQ
 
-    && if [ -f "$SONARQUBE_ZIP_LOCATION" ] ; \
-
-        then cp "$SONARQUBE_ZIP_LOCATION" sonarqube.zip; \
-
-        else curl -o sonarqube.zip -fsSL "$SONARQUBE_ZIP_URL" ; \
-
-        fi \
+    && curl -o sonarqube.zip -fsSL "$SONARQUBE_ZIP_URL" \
 
     && rm -Rf "${SONARQUBE_ZIP_DIR}" \
 
@@ -115,7 +124,9 @@ RUN set -x \
 
     && ln -s "$SONARQUBE_PUBLIC_HOME/data" "$SONARQUBE_HOME/data" \
 
-    && chown --recursive sonarqube:sonarqube "$SONARQUBE_HOME" "$SONARQUBE_PUBLIC_HOME"
+    && chown --recursive sonarqube:sonarqube "$SONARQUBE_HOME" "$SONARQUBE_PUBLIC_HOME" 
+
+   
 
 
 
