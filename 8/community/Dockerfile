@@ -18,7 +18,7 @@ ARG SONARQUBE_VERSION=8.0
 ARG SONARQUBE_ZIP_URL=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-${SONARQUBE_VERSION}.zip
 ENV SONAR_VERSION=${SONARQUBE_VERSION} \
     SONARQUBE_HOME=/opt/sq \
-    SONARQUBE_PUBLIC_HOME=/opt/sonarqube \
+    SONARQUBE_PUBLIC_HOME=/opt/sonarqube
    
     
 SHELL ["/bin/bash", "-c"]
