@@ -6,6 +6,11 @@ init_only=false
 SONARQUBE_HOME=/opt/sq
 SONARQUBE_PUBLIC_HOME=/opt/sonarqube
 
+SONARQUBE_JDBC_USERNAME=sonaradmin@sonarqubehp2db
+SONARQUBE_JDBC_PASSWORD=Sonar2019
+SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqubehp2db.postgres.database.azure.com:5432/sonarqubehp2db?user=sonaradmin@sonarqubehp2db&password=Sonar2019&sslmode=require
+SONARQUBE_WEB_JVM_OPTS=
+
 if [[ "${1:-}" != -* ]]; then
   exec "$@"
 fi
@@ -35,15 +40,13 @@ do
     fi
 done < <(env)
 # map legacy env variables
-#set_prop_from_env_var "sonar.jdbc.username" "${SONARQUBE_JDBC_USERNAME:-}"
-#set_prop_from_env_var "sonar.jdbc.password" "${SONARQUBE_JDBC_PASSWORD:-}"
-#set_prop_from_env_var "sonar.jdbc.url" "${SONARQUBE_JDBC_URL:-}"
-#set_prop_from_env_var "sonar.web.javaAdditionalOpts" "${SONARQUBE_WEB_JVM_OPTS:-}"
 
-set_prop_from_env_var "sonaradmin@sonarqubehp2db" "${SONARQUBE_JDBC_USERNAME:-}"
-set_prop_from_env_var "Sonar2019" "${SONARQUBE_JDBC_PASSWORD:-}"
-set_prop_from_env_var "jdbc:postgresql://sonarqubehp2db.postgres.database.azure.com:5432/sonarqubehp2db?user=sonaradmin@sonarqubehp2db&password=Sonar2019&sslmode=require" "${SONARQUBE_JDBC_URL:-}"
-set_prop_from_env_var " " "${SONARQUBE_WEB_JVM_OPTS:-}"
+
+set_prop_from_env_var "sonar.jdbc.username" "${SONARQUBE_JDBC_USERNAME:-}"
+set_prop_from_env_var "sonar.jdbc.password" "${SONARQUBE_JDBC_PASSWORD:-}"
+set_prop_from_env_var "sonar.jdbc.url" "${SONARQUBE_JDBC_URL:-}"
+set_prop_from_env_var "sonar.web.javaAdditionalOpts" "${SONARQUBE_WEB_JVM_OPTS:-}"
+
 
 is_empty_dir() {
   [ -z "$(ls -A "$1")" ]
