@@ -75,8 +75,8 @@ RUN set -x \
 COPY --chown=sonarqube:sonarqube run.sh "$SONARQUBE_HOME/bin/"
 
 USER root
-RUN apt-get update && apt-get -y install procps
-RUN sysctl -w vm.max_map_count=262144
+RUN apt-get update && apt-get -y install procps &&  && apt-get install -y sudo
+RUN sudo sysctl -w vm.max_map_count=262144
 
 USER sonarqube
 
