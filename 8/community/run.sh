@@ -11,7 +11,7 @@ SONARQUBE_JDBC_PASSWORD=Sonar2019
 #SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqubehp2db.postgres.database.azure.com:5432/sonarqubehp2db?user=sonaradmin@sonarqubehp2db&password=Sonar2019&sslmode=require
 # SONARQUBE_WEB_JVM_OPTS=
 
-sysctl -w vm.max_map_count=262144
+
 
 if [[ "${1:-}" != -* ]]; then
   exec "$@"
