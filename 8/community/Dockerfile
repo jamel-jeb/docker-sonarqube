@@ -5,7 +5,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* 
 
 # Http port
-EXPOSE 9000
+EXPOSE 8000
 
 RUN groupadd -r sonarqube && useradd -r -g sonarqube sonarqube
 
