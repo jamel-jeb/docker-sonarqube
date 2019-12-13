@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+sysctl -w vm.max_map_count=262144
+
 set -e
 
 if [ "${1:0:1}" != '-' ]; then
