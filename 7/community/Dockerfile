@@ -5,8 +5,10 @@ ENV SONAR_VERSION=7.9.1 \
     SONARQUBE_JDBC_USERNAME=sonarwapp@sonarqubehp2db \
     SONARQUBE_JDBC_PASSWORD=Sonar2019 \
     SONARQUBE_JDBC_URL=jdbc:postgresql://sonarqubehp2db.postgres.database.azure.com:5432/sonarwapp
-    
+
+USER root    
 RUN apt-get update && apt-get -y install procps && apt-get install -y sudo
 RUN sudo sysctl -w vm.max_map_count=262144
 
+USER sonar
 ENTRYPOINT ["./bin/run.sh"]
