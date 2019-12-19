@@ -9,7 +9,7 @@ ENV SONAR_VERSION=7.9.1 \
 USER root    
 RUN apt-get update && apt-get -y install procps && apt-get install -y sudo
 RUN echo "vm.max_map_count=262144" >> /etc/sysctl.conf
-RUN sysctl -p
+RUN sudo sysctl -p
 
 USER sonarqube
 ENTRYPOINT ["./bin/run.sh"]
