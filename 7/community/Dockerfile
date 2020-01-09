@@ -1,6 +1,6 @@
 FROM sonarqube:7.9-community
 
-ENV SONAR_VERSION=7.9.1 \
+ENV SONAR_VERSION=7.9.2 \
     SONARQUBE_HOME=/opt/sonarqube \
     SONARQUBE_JDBC_USERNAME=sonarwapp@sonarqubehp2db \
     SONARQUBE_JDBC_PASSWORD=Sonar2019 \
