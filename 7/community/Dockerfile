@@ -8,6 +8,7 @@ ENV SONAR_VERSION=7.9.2 \
 
 USER root    
 RUN apt-get update && apt-get -y install procps && apt-get install -y sudo
+RUN sudo su -
 RUN sudo sysctl -q -w vm.max_map_count=262144
 #RUN echo "vm.max_map_count=262144" >> /etc/sysctl.conf
 #RUN sudo sysctl -p
